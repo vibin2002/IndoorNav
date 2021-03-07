@@ -189,6 +189,7 @@ class GattServerActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        setTheme(R.style.AppdefaultTheme)
         setContentView(R.layout.activity_main)
 
         localTimeView = findViewById(R.id.text_time)

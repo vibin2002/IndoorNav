@@ -1,3 +1,29 @@
 <resources>
-    <string name="app_name">BLEservertty</string>
+    <string name="app_name">MiniProject</string>
+
+    <array name="depts">
+        <item>CSE</item>
+        <item>ECE</item>
+        <item>CCE</item>
+        <item>EEE</item>
+        <item>MECH</item>
+        <item>IT</item>
+    </array>
+    <array name="year">
+        <item>I</item>
+        <item>II</item>
+        <item>III</item>
+        <item>IV</item>
+    </array>
+
+    <array name="sems">
+        <item>I</item>
+        <item>II</item>
+        <item>III</item>
+        <item>IV</item>
+        <item>V</item>
+        <item>VI</item>
+        <item>VII</item>
+        <item>VIII</item>
+    </array>
 </resources>
