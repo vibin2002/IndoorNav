@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "630567972422",
+    "firebase_url": "https://esp32-3510d-default-rtdb.firebaseio.com",
+    "project_id": "esp32-3510d",
+    "storage_bucket": "esp32-3510d.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:630567972422:android:c6d5d9d3937e714a0a6447",
+        "android_client_info": {
+          "package_name": "com.example.android.bleservertty"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "630567972422-8ue9f9hcl8e02epgou38abj89fu85dih.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD_fE-Rx8Xi19P4GoYDS8BHy_izD4UuN2s"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "630567972422-8ue9f9hcl8e02epgou38abj89fu85dih.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

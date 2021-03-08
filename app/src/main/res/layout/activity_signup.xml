@@ -4,7 +4,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#fff"
     android:orientation="vertical"
     tools:context=".auth.SignupActivity">
 
@@ -117,6 +116,7 @@
             android:layout_marginStart="10dp"
             android:layout_weight="1"
             android:checked="false"
+            android:onClick="choiceforUser"
             android:text="Student" />
         <!--            android:onClick="choiceforUser"-->
 
@@ -127,6 +127,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:checked="false"
+            android:onClick="choiceforUser"
             android:text="Faculty" />
         <!--            android:onClick="choiceforUser"-->
 
@@ -153,7 +154,6 @@
         android:layout_gravity="center_vertical"
         android:layout_marginStart="16dp"
         android:layout_marginEnd="32dp"
-        android:background="@drawable/outlineforspinner"
         android:entries="@array/depts"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/epdept"
@@ -198,7 +198,6 @@
         android:layout_marginStart="16dp"
         android:layout_marginEnd="32dp"
         android:layout_weight="1"
-        android:background="@drawable/outlineforspinner"
         android:entries="@array/year"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/textView4"
@@ -213,7 +212,6 @@
         android:layout_marginStart="16dp"
         android:layout_marginEnd="32dp"
         android:layout_weight="1"
-        android:background="@drawable/outlineforspinner"
         android:entries="@array/sems"
         android:paddingRight="20dp"
         android:scrollbarStyle="outsideOverlay"
@@ -230,7 +228,6 @@
         android:layout_marginEnd="24dp"
         android:background="#000"
         android:text="Register"
-        android:textColor="#fff"
         app:layout_constraintBottom_toTopOf="@+id/signup_gotologinpage"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
@@ -244,7 +241,6 @@
         android:layout_marginBottom="16dp"
         android:text="Already have an account? Sign in."
         android:textAlignment="center"
-        android:textColor="#000"
         android:textSize="16sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/reg_btn" />

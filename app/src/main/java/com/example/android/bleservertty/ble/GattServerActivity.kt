@@ -1,6 +1,5 @@
-package com.example.android.bleservertty
+package com.example.android.bleservertty.ble
 
-import android.app.Activity
 import android.bluetooth.*
 import android.bluetooth.le.AdvertiseCallback
 import android.bluetooth.le.AdvertiseData
@@ -18,7 +17,7 @@ import android.text.format.DateFormat
 import android.util.Log
 import android.view.WindowManager
 import android.widget.TextView
-import com.example.androidthings.gattserver.TimeProfile
+import com.example.android.bleservertty.R
 import java.util.*
 
 private const val TAG = "GattServerActivity"

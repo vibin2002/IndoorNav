@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.example.androidthings.gattserver
+package com.example.android.bleservertty.ble
 
 import android.bluetooth.BluetoothGattCharacteristic
 import android.bluetooth.BluetoothGattDescriptor
@@ -71,21 +71,25 @@ object TimeProfile {
      * Current Time Service.
      */
     fun createTimeService(): BluetoothGattService {
-        val service = BluetoothGattService(TIME_SERVICE,
+        val service = BluetoothGattService(
+            TIME_SERVICE,
                 BluetoothGattService.SERVICE_TYPE_PRIMARY)
 
         // Current Time characteristic
-        val currentTime = BluetoothGattCharacteristic(CURRENT_TIME,
+        val currentTime = BluetoothGattCharacteristic(
+            CURRENT_TIME,
                 //Read-only characteristic, supports notifications
                 BluetoothGattCharacteristic.PROPERTY_READ or BluetoothGattCharacteristic.PROPERTY_NOTIFY,
                 BluetoothGattCharacteristic.PERMISSION_READ)
-        val configDescriptor = BluetoothGattDescriptor(CLIENT_CONFIG,
+        val configDescriptor = BluetoothGattDescriptor(
+            CLIENT_CONFIG,
                 //Read/write descriptor
                 BluetoothGattDescriptor.PERMISSION_READ or BluetoothGattDescriptor.PERMISSION_WRITE)
         currentTime.addDescriptor(configDescriptor)
 
         // Local Time Information characteristic
-        val localTime = BluetoothGattCharacteristic(LOCAL_TIME_INFO,
+        val localTime = BluetoothGattCharacteristic(
+            LOCAL_TIME_INFO,
                 //Read-only characteristic
                 BluetoothGattCharacteristic.PROPERTY_READ,
                 BluetoothGattCharacteristic.PERMISSION_READ)
