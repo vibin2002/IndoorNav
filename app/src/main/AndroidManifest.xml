@@ -16,14 +16,14 @@
         <activity android:name=".auth.SignupActivity">
         </activity>
         <activity android:name=".auth.LoginActivity" >
+        </activity>
+        <activity android:name=".ble.DisplayDataActivity" />
+        <activity android:name=".ble.GattServerActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-        </activity>
-        <activity android:name=".ble.DisplayDataActivity" />
-        <activity android:name=".ble.GattServerActivity">
 
         </activity>
     </application>

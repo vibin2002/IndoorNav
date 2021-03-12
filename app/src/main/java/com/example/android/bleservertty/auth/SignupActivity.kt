@@ -1,16 +1,22 @@
 package com.example.android.bleservertty.auth
 
+import android.app.Person
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.widget.AdapterView
 import android.widget.RadioButton
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.example.android.bleservertty.R
+import com.example.android.bleservertty.data.Faculty
 import com.example.android.bleservertty.databinding.ActivitySignupBinding
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 
 class SignupActivity : AppCompatActivity() {
 
@@ -24,6 +30,7 @@ class SignupActivity : AppCompatActivity() {
     private lateinit var designation: String
     private lateinit var firebaseAuth: FirebaseAuth
     private lateinit var firestore: FirebaseFirestore
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -45,6 +52,7 @@ class SignupActivity : AppCompatActivity() {
             ) {
                 dept = parent.getItemAtPosition(position).toString()
             }
+
             override fun onNothingSelected(parent: AdapterView<*>) {
                 semester = parent.getItemAtPosition(0).toString()
             }
@@ -58,6 +66,7 @@ class SignupActivity : AppCompatActivity() {
                 year = parent.getItemAtPosition(position).toString()
 
             }
+
             override fun onNothingSelected(parent: AdapterView<*>) {
                 year = parent.getItemAtPosition(0).toString()
             }
@@ -70,6 +79,7 @@ class SignupActivity : AppCompatActivity() {
             ) {
                 semester = parent.getItemAtPosition(position).toString()
             }
+
             override fun onNothingSelected(parent: AdapterView<*>) {
                 semester = parent.getItemAtPosition(0).toString()
             }
@@ -90,7 +100,7 @@ class SignupActivity : AppCompatActivity() {
                 Toast.makeText(this, "Failed", Toast.LENGTH_SHORT).show()
             }
             if (designation == "Faculty") {
-                firestore.collection("Faculty").document(username).set(data)
+                firestore.collection("Faculty").document(dept).set(data)
             } else if (designation == "Student") {
                 firestore.collection("Student").document(username).set(data)
             }
@@ -102,7 +112,7 @@ class SignupActivity : AppCompatActivity() {
         return if (designation == "Faculty") {
             mapOf(
                 "Email" to email,
-                "Department" to dept,
+                "Name" to username,
             )
         } else {
             mapOf(
@@ -114,8 +124,8 @@ class SignupActivity : AppCompatActivity() {
         }
     }
 
-    fun choiceforUser(view: View?) {
-        val selectedId: Int = binding.radiogrpDesignation.getCheckedRadioButtonId()
+    private fun choiceforUser(view: View?) {
+        val selectedId: Int = binding.radiogrpDesignation.checkedRadioButtonId
         var radioButton: RadioButton = findViewById<View>(selectedId) as RadioButton
         if (selectedId == -1) {
             Toast.makeText(this@SignupActivity, "Nothing selected", Toast.LENGTH_SHORT).show()
@@ -123,4 +133,6 @@ class SignupActivity : AppCompatActivity() {
             designation = radioButton.getText().toString()
         }
     }
+
+
 }
