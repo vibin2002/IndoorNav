@@ -1,45 +1,55 @@
 package com.example.android.bleservertty.ble
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
-import android.widget.TextView
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.ViewModelProviders
+import android.widget.ProgressBar
+import androidx.appcompat.app.AppCompatActivity
+import androidx.recyclerview.widget.DividerItemDecoration
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.android.bleservertty.R
-import com.example.android.bleservertty.auth.DisplayDataViewModel
+import com.example.android.bleservertty.adapters.MyAdapter
 import com.example.android.bleservertty.data.Faculty
-import com.google.android.material.chip.ChipGroup
+import com.example.android.bleservertty.databinding.ActivityDisplayDataBinding
+import com.google.firebase.firestore.FirebaseFirestore
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 
 class DisplayDataActivity : AppCompatActivity() {
 
-    lateinit var deptchipgrp: ChipGroup
+    lateinit var binding: ActivityDisplayDataBinding
     private var faculties = mutableListOf<Faculty>()
+    private var firestore: FirebaseFirestore = FirebaseFirestore.getInstance()
+    lateinit var myAdapter: MyAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        binding = ActivityDisplayDataBinding.inflate(layoutInflater)
         setTheme(R.style.AppdefaultTheme)
-        setContentView(R.layout.activity_display_data)
+        setContentView(binding.root)
 
-        deptchipgrp = findViewById(R.id.chip_groupdept)
+        binding.progressCircularDda.visibility = ProgressBar.VISIBLE
+        faculties.clear()
+        retrieveFaculties()
 
-        val model = ViewModelProvider(this).get(DisplayDataViewModel::class.java)
-        model.retrieveFaculties()
-        model.facultyMutableLiveData.observe( this , Observer {
-            faculties.addAll(it)
-            findViewById<TextView>(R.id.textView6).text = it.toString()
-            if (faculties.size == 0)
-            {
-                //Progressbar
+    }
 
+    private fun retrieveFaculties() = CoroutineScope(Dispatchers.IO).launch {
+        firestore.collection("Faculty").get()
+            .addOnSuccessListener {
+                it?.documents?.forEach { document ->
+                    val faculty = Faculty(
+                        document.data?.get("Email").toString(),
+                        document.data?.get("Name").toString())
+                    faculty.let { it1 -> faculties.add(it1) }
+                }
+                Log.d("WandaVision",faculties.toString())
+                binding.progressCircularDda.visibility = ProgressBar.INVISIBLE
+                myAdapter = MyAdapter(faculties)
+                binding.recyclerView.layoutManager = LinearLayoutManager(applicationContext)
+                binding.recyclerView.addItemDecoration(DividerItemDecoration(applicationContext,DividerItemDecoration.VERTICAL))
+                binding.recyclerView.adapter = myAdapter
+                myAdapter.notifyDataSetChanged()
             }
-            else
-            {
-                Log.d("IronMan",faculties.toString())
-            }
-        })
-
     }
 }

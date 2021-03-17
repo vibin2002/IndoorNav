@@ -7,8 +7,9 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.android.bleservertty.R
+import com.example.android.bleservertty.data.Faculty
 
-class MyAdapter : RecyclerView.Adapter<MyAdapter.MyViewHolder>() {
+class MyAdapter(var  dataList: MutableList<Faculty>) : RecyclerView.Adapter<MyAdapter.MyViewHolder>() {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyAdapter.MyViewHolder {
         val itemView = LayoutInflater.from(parent.context)
             .inflate(R.layout.faculty_card, parent, false)
@@ -16,12 +17,12 @@ class MyAdapter : RecyclerView.Adapter<MyAdapter.MyViewHolder>() {
     }
 
     override fun onBindViewHolder(holder: MyAdapter.MyViewHolder, position: Int) {
-        TODO("Not yet implemented")
+        holder.desc.text = dataList[position].Email
+        holder.title.text = dataList[position].Name
+        holder.imageIcon.setImageResource(R.drawable.propicblank)
     }
 
-    override fun getItemCount(): Int {
-        TODO("Not yet implemented")
-    }
+    override fun getItemCount() = dataList.size
 
     inner class MyViewHolder(view: View) : RecyclerView.ViewHolder(view)  {
         var title: TextView = view.findViewById(R.id.title)
