@@ -5,14 +5,17 @@ import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.widget.ProgressBar
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.SearchView
+import androidx.core.view.forEach
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.android.bleservertty.R
 import com.example.android.bleservertty.adapters.MyAdapter
 import com.example.android.bleservertty.data.Faculty
 import com.example.android.bleservertty.databinding.ActivityDisplayDataBinding
+import com.google.android.material.chip.Chip
 import com.google.firebase.firestore.FirebaseFirestore
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -24,6 +27,7 @@ class DisplayDataActivity : AppCompatActivity() {
     private var faculties = mutableListOf<Faculty>()
     private var firestore: FirebaseFirestore = FirebaseFirestore.getInstance()
     lateinit var myAdapter: MyAdapter
+    lateinit var searchView: SearchView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -34,6 +38,12 @@ class DisplayDataActivity : AppCompatActivity() {
         binding.progressCircularDda.visibility = ProgressBar.VISIBLE
         faculties.clear()
         retrieveFaculties()
+
+        binding.chipGroupdept.forEach { child ->
+            (child as? Chip)?.setOnCheckedChangeListener { _, _ ->
+                registerFilterChanged()
+            }
+        }
 
     }
 
@@ -59,7 +69,7 @@ class DisplayDataActivity : AppCompatActivity() {
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         menuInflater.inflate(R.menu.home_menu , menu)
         val item: MenuItem = menu!!.findItem(R.id.searchView)
-        val searchView: SearchView = item.actionView as SearchView
+        searchView = item.actionView as SearchView
         searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
 
             override fun onQueryTextSubmit(query: String?): Boolean {
@@ -73,6 +83,36 @@ class DisplayDataActivity : AppCompatActivity() {
 
         })
         return super.onCreateOptionsMenu(menu)
+    }
+
+    private fun registerFilterChanged() {
+        val ids = binding.chipGroupdept.checkedChipIds
+
+        val titles = mutableListOf<CharSequence>()
+
+        ids.forEach { id ->
+            titles.add(binding.chipGroupdept.findViewById<Chip>(id).text)
+        }
+
+        val text = if (titles.isNotEmpty()) {
+            titles.joinToString(", ")
+        } else {
+            ""
+        }
+        myAdapter.filter.filter(text)
+        Toast.makeText(this, text, Toast.LENGTH_SHORT).show()
+//        searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+//
+//            override fun onQueryTextSubmit(query: String?): Boolean {
+//                return false
+//            }
+//
+//            override fun onQueryTextChange(newText: String?): Boolean {
+//                myAdapter.filter.filter(text)
+//                return true
+//            }
+//
+//        })
     }
 
 }
