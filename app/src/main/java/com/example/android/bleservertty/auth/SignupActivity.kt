@@ -13,6 +13,7 @@ import com.example.android.bleservertty.R
 import com.example.android.bleservertty.data.Faculty
 import com.example.android.bleservertty.databinding.ActivitySignupBinding
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.firestore.FirebaseFirestore
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -96,14 +97,15 @@ class SignupActivity : AppCompatActivity() {
             val data = getDataForFireStore(designation)
             firebaseAuth.createUserWithEmailAndPassword(email, password).addOnSuccessListener {
                 Toast.makeText(this, "User created", Toast.LENGTH_SHORT).show()
+                if (designation == "Faculty") {
+                    firestore.collection("Faculty").document(FirebaseAuth.getInstance().currentUser!!.uid).set(data)
+                } else if (designation == "Student") {
+                    firestore.collection("Student").document(FirebaseAuth.getInstance().currentUser!!.uid).set(data)
+                }
             }.addOnFailureListener {
                 Toast.makeText(this, "Failed", Toast.LENGTH_SHORT).show()
             }
-            if (designation == "Faculty") {
-                firestore.collection("Faculty").document(dept).set(data)
-            } else if (designation == "Student") {
-                firestore.collection("Student").document(username).set(data)
-            }
+
         }
 
     }
@@ -111,7 +113,7 @@ class SignupActivity : AppCompatActivity() {
     private fun getDataForFireStore(designation: String): Map<String, String> {
         return if (designation == "Faculty") {
             mapOf(
-                "Email" to email,
+                "Department" to dept,
                 "Name" to username,
             )
         } else {
@@ -124,7 +126,7 @@ class SignupActivity : AppCompatActivity() {
         }
     }
 
-    private fun choiceforUser(view: View?) {
+     fun choiceforUser(view: View?) {
         val selectedId: Int = binding.radiogrpDesignation.checkedRadioButtonId
         var radioButton: RadioButton = findViewById<View>(selectedId) as RadioButton
         if (selectedId == -1) {

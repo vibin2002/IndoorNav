@@ -26,7 +26,7 @@ class MyAdapter(var  dataList: MutableList<Faculty>) : RecyclerView.Adapter<MyAd
     }
 
     override fun onBindViewHolder(holder: MyAdapter.MyViewHolder, position: Int) {
-        holder.desc.text = dataList[position].Email
+        holder.desc.text = dataList[position].Department
         holder.title.text = dataList[position].Name
         holder.imageIcon.setImageResource(R.drawable.propicblank)
     }
@@ -52,7 +52,7 @@ class MyAdapter(var  dataList: MutableList<Faculty>) : RecyclerView.Adapter<MyAd
                     val pattern = constraint.toString().toLowerCase().trim()
                     for (item in dataListAll)
                     {
-                        if (item.Email.toLowerCase().contains(pattern)
+                        if (item.Department.toLowerCase().contains(pattern)
                             || item.Name.toLowerCase().contains(pattern))
                         {
                             filterList.add(item)

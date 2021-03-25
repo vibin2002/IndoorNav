@@ -52,22 +52,28 @@ class DisplayDataActivity : AppCompatActivity() {
             .addOnSuccessListener {
                 it?.documents?.forEach { document ->
                     val faculty = Faculty(
-                        document.data?.get("Email").toString(),
-                        document.data?.get("Name").toString())
+                        document.data?.get("Department").toString(),
+                        document.data?.get("Name").toString()
+                    )
                     faculty.let { it1 -> faculties.add(it1) }
                 }
-                Log.d("WandaVision",faculties.toString())
+                Log.d("WandaVision", faculties.toString())
                 binding.progressCircularDda.visibility = ProgressBar.INVISIBLE
                 myAdapter = MyAdapter(faculties)
                 binding.recyclerView.layoutManager = LinearLayoutManager(applicationContext)
-                binding.recyclerView.addItemDecoration(DividerItemDecoration(applicationContext,DividerItemDecoration.VERTICAL))
+                binding.recyclerView.addItemDecoration(
+                    DividerItemDecoration(
+                        applicationContext,
+                        DividerItemDecoration.VERTICAL
+                    )
+                )
                 binding.recyclerView.adapter = myAdapter
                 myAdapter.notifyDataSetChanged()
             }
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
-        menuInflater.inflate(R.menu.home_menu , menu)
+        menuInflater.inflate(R.menu.home_menu, menu)
         val item: MenuItem = menu!!.findItem(R.id.searchView)
         searchView = item.actionView as SearchView
         searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
@@ -101,19 +107,7 @@ class DisplayDataActivity : AppCompatActivity() {
         }
         myAdapter.filter.filter(text)
         Toast.makeText(this, text, Toast.LENGTH_SHORT).show()
-//        searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
-//
-//            override fun onQueryTextSubmit(query: String?): Boolean {
-//                return false
-//            }
-//
-//            override fun onQueryTextChange(newText: String?): Boolean {
-//                myAdapter.filter.filter(text)
-//                return true
-//            }
-//
-//        })
-    }
 
+    }
 }
 
